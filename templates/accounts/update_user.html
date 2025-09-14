@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} | Modifier un utilisateur {% endblock %}
+{% block content %}
+
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Modifier un utilisateur</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'admin_dashboard' %}">Administration</a></li>
+                <li class="active">Modifier un utilisateur</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+<!-- Contact section start -->
+<div class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-section shadow-lg rounded p-4 bg-white">
+                    <div class="logo-2">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'img/logos/black-logo.png' %}" alt="logo">
+                        </a>
+                    </div>
+                    <h3 class="text-center mb-4"><i class="fa fa-edit text-info mr-2"></i>Modifier l'utilisateur</h3>
+                    {% include 'includes/messages.html' %}
+                    <form action="{% url 'update_user' user_data.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group form-box">
+                            <input type="text" name="firstname" class="input-text" placeholder="Prénom" value="{{ user_data.first_name }}" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="text" name="lastname" class="input-text" placeholder="Nom" value="{{ user_data.last_name }}" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="text" name="username" class="input-text" placeholder="Nom d'utilisateur" value="{{ user_data.username }}" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="email" name="email" class="input-text" placeholder="Email" value="{{ user_data.email }}" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="password" name="password" class="input-text" placeholder="Nouveau mot de passe (laisser vide pour ne pas changer)">
+                        </div>
+                        
+                        <!-- Section Rôle -->
+                        <div class="mt-4 mb-3">
+                            <h5 class="text-primary"><i class="fa fa-users mr-2"></i>Rôle utilisateur</h5>
+                            <hr>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-info mb-3 h-100">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                                        <div class="form-check">
+                                            <input type="radio" name="user_role" value="client" id="role_client" {% if not user_data.is_superuser %}checked{% endif %}>
+                                            <label for="role_client" class="form-check-label">
+                                                <i class="fa fa-user fa-2x text-info d-block mb-2"></i>
+                                                <strong>Client</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-danger mb-3 h-100">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                                        <div class="form-check">
+                                            <input type="radio" name="user_role" value="admin" id="role_admin" {% if user_data.is_superuser %}checked{% endif %}>
+                                            <label for="role_admin" class="form-check-label">
+                                                <i class="fa fa-user fa-2x text-danger d-block mb-2"></i>
+                                                <strong>Admin</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-info btn-4 btn-lg btn-block"><i class="fa fa-refresh mr-2"></i>Mettre à jour l'utilisateur</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact section end -->
+
+{% endblock %}

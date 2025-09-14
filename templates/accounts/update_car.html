@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Modifier une voiture {% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/car-forms.css' %}">
+<style>
+/* Force l'affichage des champs fichier, coûte que coûte */
+.form-control-file,
+input[type="file"] {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: static !important;
+  width: 100% !important;
+  padding: 10px !important;
+  border: 2px dashed #cfd8ff !important;
+  background-color: #f8faff !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  z-index: 999 !important; /* Augmentation du z-index pour s'assurer que les inputs sont au-dessus */
+}
+
+/* Désactiver Dropzone.js pour éviter les conflits */
+.dropzone, .dz-clickable, .dz-message {
+  display: none !important;
+}
+
+/* Correction pour la page_loader qui pourrait masquer le contenu */
+.page_loader {
+  display: none !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Modifier une voiture</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'admin_dashboard' %}">Administration</a></li>
+                <li class="active">Modifier une voiture</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+<!-- Contact section start -->
+<div class="contact-section">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="form-section shadow-lg rounded p-4 bg-white">
+                    <div class="logo-2">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'img/logos/black-logo.png' %}" alt="logo">
+                        </a>
+                    </div>
+                    <h3 class="text-center mb-4"><i class="fa fa-edit text-primary mr-2"></i>Modifier la voiture</h3>
+                    {% include 'includes/messages.html' %}
+                    <form action="{% url 'update_car' car.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="car_title"><i class="fa fa-car mr-2"></i>Titre de la voiture</label>
+                                    <input type="text" name="car_title" id="car_title" class="input-text" placeholder="Ex: BMW Série 3" value="{{ car.car_title }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="state"><i class="fa fa-map-marker mr-2"></i>État</label>
+                                    <select class="form-control select input-text" name="state" id="state" required>
+                                        <option value="">Sélectionnez un état</option>
+                                        {% for key, value in car_states %}
+                                            <option value="{{ key }}" {% if key == car.state %}selected{% endif %}>{{ value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="city"><i class="fa fa-building mr-2"></i>Ville</label>
+                                    <input type="text" name="city" id="city" class="input-text" placeholder="Ex: Paris" value="{{ car.city }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="color"><i class="fa fa-paint-brush mr-2"></i>Couleur</label>
+                                    <input type="text" name="color" id="color" class="input-text" placeholder="Ex: Noir" value="{{ car.color }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="model"><i class="fa fa-info-circle mr-2"></i>Modèle</label>
+                                    <input type="text" name="model" id="model" class="input-text" placeholder="Ex: 320d" value="{{ car.model }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="year"><i class="fa fa-calendar mr-2"></i>Année</label>
+                                    <input type="number" name="year" id="year" class="input-text" placeholder="Ex: 2022" value="{{ car.year }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="condition"><i class="fa fa-check-circle mr-2"></i>État</label>
+                                    <select class="form-control select input-text" name="condition" id="condition" required>
+                                        <option value="">Sélectionnez l'état</option>
+                                        <option value="New" {% if car.condition == 'New' %}selected{% endif %}>Neuf</option>
+                                        <option value="Used" {% if car.condition == 'Used' %}selected{% endif %}>Occasion</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="price"><i class="fa fa-tag mr-2"></i>Prix</label>
+                                    <input type="number" name="price" id="price" class="input-text" placeholder="Ex: 25000" value="{{ car.price }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-box">
+                            <label for="description"><i class="fa fa-file-text mr-2"></i>Description</label>
+                            <textarea name="description" id="description" class="input-text" placeholder="Décrivez votre véhicule en détail..." rows="5" required>{{ car.description }}</textarea>
+                        </div>
+
+                        <!-- Nouveaux champs ajoutés -->
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="doors"><i class="fa fa-car mr-2"></i>Nombre de portes</label>
+                                    <input type="number" name="doors" id="doors" class="input-text" placeholder="Ex: 4" value="{{ car.doors }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="passengers"><i class="fa fa-users mr-2"></i>Nombre de passagers</label>
+                                    <input type="number" name="passengers" id="passengers" class="input-text" placeholder="Ex: 5" value="{{ car.passengers }}" required>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="fuel_type"><i class="fa fa-filter mr-2"></i>Type de carburant</label>
+                                    <input type="text" name="fuel_type" id="fuel_type" class="input-text" placeholder="Ex: Diesel" value="{{ car.fuel_type }}" required>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="transmission"><i class="fa fa-gears mr-2"></i>Transmission</label>
+                                    <select name="transmission" id="transmission" class="input-text" required>
+                                        <option value="">Sélectionnez le type de transmission</option>
+                                        <option value="Automatique" {% if car.transmission == 'Automatique' %}selected{% endif %}>Automatique</option>
+                                        <option value="Manuelle" {% if car.transmission == 'Manuelle' %}selected{% endif %}>Manuelle</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="features"><i class="fa fa-list-ul mr-2"></i>Caractéristiques</label>
+                                    <select class="form-control select input-text" name="features[]" id="features" multiple>
+                                        <option value="Cruise Control" {% if "Cruise Control" in car.features %}selected{% endif %}>Régulateur de vitesse</option>
+                                        <option value="Audio Interface" {% if "Audio Interface" in car.features %}selected{% endif %}>Interface audio</option>
+                                        <option value="Airbags" {% if "Airbags" in car.features %}selected{% endif %}>Airbags</option>
+                                        <option value="Air Conditioning" {% if "Air Conditioning" in car.features %}selected{% endif %}>Climatisation</option>
+                                        <option value="Seat Heating" {% if "Seat Heating" in car.features %}selected{% endif %}>Sièges chauffants</option>
+                                        <option value="Alarm System" {% if "Alarm System" in car.features %}selected{% endif %}>Système d'alarme</option>
+                                        <option value="ParkAssist" {% if "ParkAssist" in car.features %}selected{% endif %}>Aide au stationnement</option>
+                                        <option value="Power Steering" {% if "Power Steering" in car.features %}selected{% endif %}>Direction assistée</option>
+                                        <option value="Reversing Camera" {% if "Reversing Camera" in car.features %}selected{% endif %}>Caméra de recul</option>
+                                        <option value="Direct Fuel Injection" {% if "Direct Fuel Injection" in car.features %}selected{% endif %}>Injection directe</option>
+                                        <option value="Auto Start/Stop" {% if "Auto Start/Stop" in car.features %}selected{% endif %}>Start/Stop automatique</option>
+                                        <option value="Wind Deflector" {% if "Wind Deflector" in car.features %}selected{% endif %}>Déflecteur de vent</option>
+                                        <option value="Bluetooth Handset" {% if "Bluetooth Handset" in car.features %}selected{% endif %}>Kit mains libres Bluetooth</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header bg-warning text-white">
+                                <h5 class="mb-0"><i class="fa fa-images mr-2"></i>Photos du véhicule</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="car_photo"><strong>Photo principale</strong></label>
+                                    <div class="mb-2">
+                                        {% if car.car_photo %}
+                                            <img src="{{ car.car_photo.url }}" alt="Photo principale" class="img-thumbnail" style="max-height: 150px;">
+                                        {% endif %}
+                                    </div>
+                                    <input type="file" name="car_photo" class="form-control-file custom-file-input" id="car_photo">
+                                    <small class="form-text text-muted">Laissez vide pour conserver l'image actuelle</small>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="car_photo_1"><strong>Photo additionnelle 1</strong></label>
+                                    <div class="mb-2">
+                                        {% if car.car_photo_1 %}
+                                            <img src="{{ car.car_photo_1.url }}" alt="Photo 1" class="img-thumbnail" style="max-height: 150px;">
+                                        {% endif %}
+                                    </div>
+                                    <input type="file" name="car_photo_1" class="form-control-file custom-file-input" id="car_photo_1">
+                                    <small class="form-text text-muted">Laissez vide pour conserver l'image actuelle</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="car_photo_2"><strong>Photo additionnelle 2</strong></label>
+                                    <div class="mb-2">
+                                        {% if car.car_photo_2 %}
+                                            <img src="{{ car.car_photo_2.url }}" alt="Photo 2" class="img-thumbnail" style="max-height: 150px;">
+                                        {% endif %}
+                                    </div>
+                                    <input type="file" name="car_photo_2" class="form-control-file custom-file-input" id="car_photo_2">
+                                    <small class="form-text text-muted">Laissez vide pour conserver l'image actuelle</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="car_photo_3"><strong>Photo additionnelle 3</strong></label>
+                                    <div class="mb-2">
+                                        {% if car.car_photo_3 %}
+                                            <img src="{{ car.car_photo_3.url }}" alt="Photo 3" class="img-thumbnail" style="max-height: 150px;">
+                                        {% endif %}
+                                    </div>
+                                    <input type="file" name="car_photo_3" class="form-control-file custom-file-input" id="car_photo_3">
+                                    <small class="form-text text-muted">Laissez vide pour conserver l'image actuelle</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="car_photo_4"><strong>Photo additionnelle 4</strong></label>
+                                    <div class="mb-2">
+                                        {% if car.car_photo_4 %}
+                                            <img src="{{ car.car_photo_4.url }}" alt="Photo 4" class="img-thumbnail" style="max-height: 150px;">
+                                        {% endif %}
+                                    </div>
+                                    <input type="file" name="car_photo_4" class="form-control-file custom-file-input" id="car_photo_4">
+                                    <small class="form-text text-muted">Laissez vide pour conserver l'image actuelle</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mt-4">
+                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                <i class="fa fa-refresh mr-2"></i>Mettre à jour la voiture
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact section end -->
+
+{% endblock %}

@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} | Tableau de Bord Administrateur {% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Tableau de Bord Administrateur</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li class="active">Administration</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+<!--   Dashboard Start   -->
+
+<div class="container mt-50 mb-50">
+  {% include 'includes/messages.html' %}
+  <div class="dashboard-container animate-fade-in">
+	<div class="dashboard-title">
+        <h1>Bienvenue <span>{{user.first_name}}</span></h1>
+        <p>Tableau de bord administrateur - Gestion du site</p>
+    </div>
+    
+    <!-- Statistiques -->
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card stat-card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa fa-users"></i>Utilisateurs</h5>
+                    <h2 class="card-text">{{ total_users }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa fa-car"></i>Voitures</h5>
+                    <h2 class="card-text">{{ total_cars }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa fa-envelope"></i>Demandes</h5>
+                    <h2 class="card-text">{{ total_inquiries }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Onglets pour les différentes sections -->
+    <ul class="nav nav-tabs-custom" id="adminTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab">
+                <i class="fa fa-users"></i>Utilisateurs
+                <span class="badge badge-glow badge-primary">{{ users.count }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="cars-tab" data-toggle="tab" href="#cars" role="tab">
+                <i class="fa fa-car"></i>Voitures
+                <span class="badge badge-glow badge-success">{{ cars.count }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="inquiries-tab" data-toggle="tab" href="#inquiries" role="tab">
+                <i class="fa fa-envelope"></i>Demandes
+                <span class="badge badge-glow badge-info">{{ inquiries.count }}</span>
+            </a>
+        </li>
+    </ul>
+    
+
+    
+    <div class="tab-content" id="adminTabsContent">
+        <!-- Section Utilisateurs -->
+        <div class="tab-pane fade show active" id="users" role="tabpanel">
+            <div class="card mt-3 tab-content-custom">
+                <div class="card-header-custom bg-gradient-primary text-white">
+                    <h3><i class="fa fa-users"></i>Gestion des Utilisateurs</h3>
+                    <a href="{% url 'create_user' %}" class="btn btn-custom btn-light"><i class="fa fa-plus"></i>Ajouter un utilisateur</a>
+                </div>
+                <div class="card-body animate-fade-in">
+                    <div class="table-responsive">
+                        <table class="table table-custom table-hover">
+                        <thead class="thead-custom">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Date d'inscription</th>
+                                <th scope="col">Statut</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.date_joined|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% if user.is_superuser %}
+                                        <span class="badge badge-primary">Admin</span>
+                                    {% elif user.is_staff %}
+                                        <span class="badge badge-info">Staff</span>
+                                    {% else %}
+                                        <span class="badge badge-secondary">Utilisateur</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'update_user' user.id %}" class="btn btn-custom btn-primary" title="Modifier"><i class="fa fa-edit"></i></a>
+                                        {% if user.id != request.user.id %}
+                                            <a href="{% url 'delete_user' user.id %}" class="btn btn-custom btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur?');" title="Supprimer"><i class="fa fa-trash"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Voitures -->
+        <div class="tab-pane fade" id="cars" role="tabpanel">
+            <div class="card mt-3 tab-content-custom">
+                <div class="card-header-custom bg-gradient-success text-white">
+                    <h3><i class="fa fa-car"></i>Gestion des Voitures</h3>
+                    <a href="{% url 'create_car' %}" class="btn btn-custom btn-light"><i class="fa fa-plus"></i>Ajouter une voiture</a>
+                </div>
+                <div class="card-body animate-fade-in">
+                    <div class="table-responsive">
+                        <table class="table table-custom table-hover">
+                        <thead class="thead-custom">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Modèle</th>
+                                <th scope="col">État</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for car in cars %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ car.car_title }}</td>
+                                <td>{{ car.model }}</td>
+                                <td>{{ car.state }}</td>
+                                <td>{{ car.price }} €</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'car_detail' car.id %}" class="btn btn-custom btn-info" title="Voir"><i class="fa fa-eye"></i></a>
+                                        <a href="{% url 'update_car' car.id %}" class="btn btn-custom btn-warning" title="Modifier"><i class="fa fa-edit"></i></a>
+                                        <a href="{% url 'delete_car' car.id %}" class="btn btn-custom btn-danger" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette voiture?');"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Demandes -->
+        <div class="tab-pane fade" id="inquiries" role="tabpanel">
+            <div class="card mt-3 tab-content-custom">
+                <div class="card-header-custom bg-gradient-info text-white">
+                    <h3><i class="fa fa-envelope"></i>Gestion des Demandes</h3>
+                </div>
+                <div class="card-body animate-fade-in">
+                    <div class="table-responsive">
+                        <table class="table table-custom table-hover">
+                        <thead class="thead-custom">
+                            <tr>
+                                <th scope="col" class="col-idx">#</th>
+                                <th scope="col" class="col-nom">Nom</th>
+                                <th scope="col" class="col-voiture">Voiture</th>
+                                <th scope="col" class="col-email">Email</th>
+                                <th scope="col" class="col-tel">Téléphone</th>
+                                <th scope="col" class="col-date">Date</th>
+                                <th scope="col" class="col-statut">Statut</th>
+                                <th scope="col" class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for inquiry in inquiries %}
+                            <tr>
+                                <th scope="row" class="col-idx">{{ forloop.counter }}</th>
+                                <td class="col-nom"><span title="{{ inquiry.first_name }} {{ inquiry.last_name }}">{{ inquiry.first_name }} {{ inquiry.last_name }}</span></td>
+                                <td class="col-voiture"><span title="{{ inquiry.car_title }}">{{ inquiry.car_title }}</span></td>
+                                <td class="col-email"><span title="{{ inquiry.email }}">{{ inquiry.email }}</span></td>
+                                <td class="col-tel">{{ inquiry.phone }}</td>
+                                <td class="col-date">{{ inquiry.create_date|date:"d/m/Y" }}</td>
+                                <td class="col-statut">
+                                    {% if inquiry.status == 'pending' %}
+                                        <span class="badge badge-warning">En attente</span>
+                                    {% elif inquiry.status == 'accepted' %}
+                                        <span class="badge badge-success">Accepté</span>
+                                    {% elif inquiry.status == 'rejected' %}
+                                        <span class="badge badge-danger">Refusé</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'inquiry_detail' inquiry.id %}" class="btn btn-custom btn-info" title="Voir"><i class="fa fa-eye"></i></a>
+                                    
+                                        {% if inquiry.status == 'pending' %}
+                                            <form method="post" action="{% url 'update_inquiry_status' inquiry.id %}" style="display:inline-block; margin-left:4px;">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="status" value="accepted">
+                                                <button type="submit" class="btn btn-custom btn-success" title="Accepter"><i class="fa fa-check"></i></button>
+                                            </form>
+                                            <form method="post" action="{% url 'update_inquiry_status' inquiry.id %}" style="display:inline-block; margin-left:4px;">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="status" value="rejected">
+                                                <button type="submit" class="btn btn-custom btn-warning" title="Refuser"><i class="fa fa-times"></i></button>
+                                            </form>
+                                        {% endif %}
+                                    
+                                        {% if inquiry.status == 'accepted' %}
+                                            <a href="{% url 'generate_invoice' inquiry.id %}" class="btn btn-custom btn-primary" title="Facture" style="margin-left:4px;"><i class="fa fa-file-pdf"></i></a>
+                                        {% endif %}
+                                    
+                                        <a href="{% url 'delete_inquiry' inquiry.id %}" class="btn btn-custom btn-danger" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande?');" style="margin-left:4px;"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--   Dashboard End   -->
+
+{% endblock %}

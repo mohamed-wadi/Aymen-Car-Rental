@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail de la demande</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/custom-buttons.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+<style>
+    .inquiry-detail {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .inquiry-header {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+    
+    .inquiry-title {
+        color: #323232;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .inquiry-meta {
+        color: #777;
+        font-size: 14px;
+    }
+    
+    .inquiry-content {
+        margin-bottom: 25px;
+    }
+    
+    .inquiry-field {
+        margin-bottom: 15px;
+    }
+    
+    .inquiry-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+        display: block;
+    }
+    
+    .inquiry-value {
+        background-color: #f9f9f9;
+        padding: 10px 15px;
+        border-radius: 4px;
+        border-left: 3px solid #5cb85c;
+    }
+    
+    .inquiry-message {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 4px;
+        border-left: 3px solid #5bc0de;
+        min-height: 100px;
+    }
+    
+    .actions-bar {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        text-align: right;
+    }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'img/logos/black-logo.png' %}" alt="Carzone Logo" style="max-height: 40px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">Tableau de bord</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Banner Start -->
+<div class="container-fluid bg-primary py-3 mb-4">
+    <div class="container py-2">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-left">
+                <h2 class="mb-0 text-white text-uppercase">Détail de la demande</h2>
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="btn btn-sm btn-outline-light" href="{% url 'admin_dashboard' %}">Tableau de bord</a>
+                    <i class="fas fa-angle-right text-light mx-2"></i>
+                    <span class="text-light">Détail de la demande</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner End -->
+
+<!-- Inquiry Detail Start -->
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="inquiry-detail">
+                <div class="inquiry-header">
+                    <h2 class="inquiry-title">Demande pour: {{ inquiry.car_title }}</h2>
+                    <div class="inquiry-meta">
+                        <span><i class="fa fa-calendar mr-2"></i>{{ inquiry.create_date|date:"d/m/Y H:i" }}</span>
+                        <span class="ml-3"><i class="fa fa-user mr-2"></i>{{ inquiry.first_name }} {{ inquiry.last_name }}</span>
+                    </div>
+                </div>
+                
+                <div class="inquiry-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Nom complet</span>
+                                <div class="inquiry-value">{{ inquiry.first_name }} {{ inquiry.last_name }}</div>
+                            </div>
+                            
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Email</span>
+                                <div class="inquiry-value">{{ inquiry.email }}</div>
+                            </div>
+                            
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Téléphone</span>
+                                <div class="inquiry-value">{{ inquiry.phone }}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Voiture</span>
+                                <div class="inquiry-value">{{ inquiry.car_title }}</div>
+                            </div>
+                            
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Localisation</span>
+                                <div class="inquiry-value">{{ inquiry.city }}, {{ inquiry.state }}</div>
+                            </div>
+                            
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Besoin du client</span>
+                                <div class="inquiry-value">{{ inquiry.customer_need }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Informations de location -->
+                    {% if inquiry.rental_start_date and inquiry.rental_end_date %}
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <h4 class="text-primary"><i class="fa fa-calendar mr-2"></i>Détails de la location</h4>
+                            <hr>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Date de début</span>
+                                <div class="inquiry-value">{{ inquiry.rental_start_date|date:"d/m/Y" }}</div>
+                            </div>
+                            
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Date de fin</span>
+                                <div class="inquiry-value">{{ inquiry.rental_end_date|date:"d/m/Y" }}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Nombre de jours</span>
+                                <div class="inquiry-value">{{ inquiry.rental_days|default:"Calcul en cours..." }} jour{{ inquiry.rental_days|pluralize }}</div>
+                            </div>
+                            
+                            <div class="inquiry-field">
+                                <span class="inquiry-label">Coût total de location</span>
+                                <div class="inquiry-value text-success font-weight-bold">
+                                    {% if inquiry.total_rental_cost %}
+                                        ${{ inquiry.total_rental_cost|floatformat:2 }}
+                                    {% else %}
+                                        Calcul en cours...
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="inquiry-field mt-4">
+                        <span class="inquiry-label">Message</span>
+                        <div class="inquiry-message">
+                            {{ inquiry.message|linebreaks }}
+                        </div>
+                    </div>
+                    
+                    <div class="inquiry-field mt-4">
+                        <span class="inquiry-label">Statut</span>
+                        <div class="inquiry-value">
+                            {% if inquiry.status == 'pending' %}
+                                <span class="badge badge-warning">En attente</span>
+                            {% elif inquiry.status == 'accepted' %}
+                                <span class="badge badge-success">Accepté</span>
+                            {% elif inquiry.status == 'rejected' %}
+                                <span class="badge badge-danger">Refusé</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="actions-bar">
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary"><i class="fa fa-arrow-left mr-2"></i>Retour</a>
+                    
+                    {% if inquiry.status == 'pending' %}
+                        <form method="post" action="{% url 'update_inquiry_status' inquiry.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="accepted">
+                            <button type="submit" class="btn btn-success ml-2"><i class="fa fa-check mr-2"></i>Accepter</button>
+                        </form>
+                        
+                        <form method="post" action="{% url 'update_inquiry_status' inquiry.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="rejected">
+                            <button type="submit" class="btn btn-danger ml-2"><i class="fa fa-times mr-2"></i>Refuser</button>
+                        </form>
+                    {% elif inquiry.status == 'accepted' %}
+                        <a href="{% url 'generate_invoice' inquiry.id %}" class="btn btn-primary ml-2"><i class="fa fa-file-pdf mr-2"></i>Générer Facture</a>
+                    {% endif %}
+                    
+                    <a href="{% url 'delete_inquiry' inquiry.id %}" class="btn btn-danger ml-2" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande?');"><i class="fa fa-trash mr-2"></i>Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Inquiry Detail End -->
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <p class="mb-0">&copy; {% now "Y" %} Carzone. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

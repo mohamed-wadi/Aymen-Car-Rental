@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} | Créer un utilisateur {% endblock %}
+{% block content %}
+
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Créer un utilisateur</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'admin_dashboard' %}">Administration</a></li>
+                <li class="active">Créer un utilisateur</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+<!-- Contact section start -->
+<div class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-section">
+                    <div class="logo-2">
+                        
+                         <a href="{% url 'home' %}">
+                            <img src="{% static 'img/logos/black-logo.png' %}" alt="logo" class="img-fluid" style="max-height: 60px;">
+                        </a>
+                    </div>
+                    <h3 class="text-center mb-4"><i class="fa fa-user-plus text-primary mr-2"></i>Créer un nouvel utilisateur</h3>
+                    {% include 'includes/messages.html' %}
+                    <form action="{% url 'create_user' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group form-box">
+                            <input type="text" name="firstname" class="input-text" placeholder="Prénom" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="text" name="lastname" class="input-text" placeholder="Nom" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="text" name="username" class="input-text" placeholder="Nom d'utilisateur" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="email" name="email" class="input-text" placeholder="Email" required>
+                        </div>
+                        <div class="form-group form-box">
+                            <input type="password" name="password" class="input-text" placeholder="Mot de passe" required>
+                        </div>
+                        
+                        <!-- Section Rôle -->
+                        <div class="mt-4 mb-3">
+                            <h5 class="text-primary"><i class="fa fa-users mr-2"></i>Rôle utilisateur</h5>
+                            <hr>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-info mb-3 h-100">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                                        <div class="form-check">
+                                            <input type="radio" name="user_role" value="client" id="role_client" checked>
+                                            <label for="role_client" class="form-check-label">
+                                                <i class="fa fa-user fa-2x text-info d-block mb-2"></i>
+                                                <strong>Client</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-danger mb-3 h-100">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                                        <div class="form-check">
+                                            <input type="radio" name="user_role" value="admin" id="role_admin">
+                                            <label for="role_admin" class="form-check-label">
+                                                <i class="fa fa-user fa-2x text-danger d-block mb-2"></i>
+                                                <strong>Admin</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-4 btn-lg btn-block">Créer l'utilisateur</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact section end -->
+
+{% endblock %}

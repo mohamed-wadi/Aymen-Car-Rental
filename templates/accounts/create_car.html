@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Ajouter une voiture {% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/car-forms.css' %}">
+<style>
+/* Force l'affichage des champs fichier */
+.form-control-file,
+input[type="file"] {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: static !important;
+  width: 100% !important;
+  padding: 10px !important;
+  border: 2px dashed #cfd8ff !important;
+  background-color: #f8faff !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  z-index: 999 !important;
+  transition: all 0.3s ease !important;
+}
+
+.form-control-file:hover,
+input[type="file"]:hover {
+  border-color: #5cb85c !important;
+  background-color: #f0fff4 !important;
+}
+
+/* Désactiver Dropzone.js pour éviter les conflits */
+.dropzone, .dz-clickable, .dz-message {
+  display: none !important;
+}
+
+/* Correction pour la page_loader */
+.page_loader {
+  display: none !important;
+}
+
+/* Styles améliorés pour le formulaire */
+.form-section {
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+  border-radius: 10px !important;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input-text:focus {
+  box-shadow: 0 0 0 0.2rem rgba(92, 184, 92, 0.25);
+  border-color: #5cb85c;
+}
+
+.section-title {
+  border-left: 4px solid #5cb85c;
+  padding-left: 10px;
+  margin: 25px 0 15px;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.form-check-label {
+  font-weight: normal;
+}
+
+/* Styles pour les sections de formulaire */
+.form-section-card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.form-section-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 15px 20px;
+}
+
+.form-section-body {
+  padding: 20px;
+  background-color: #fff;
+}
+
+/* Styles pour les boutons */
+.btn-car-form {
+  padding: 10px 30px;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn-car-form:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Ajouter une voiture</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'admin_dashboard' %}">Administration</a></li>
+                <li class="active">Ajouter une voiture</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+<!-- Contact section start -->
+<div class="contact-section">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="form-section shadow-lg rounded p-4 bg-white">
+                    <div class="logo-2 text-center mb-3">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'img/logos/black-logo.png' %}" alt="logo" class="img-fluid" style="max-height: 60px;">
+                        </a>
+                    </div>
+                    <h3 class="text-center mb-4"><i class="fa fa-car text-success mr-2"></i>Ajouter une nouvelle voiture</h3>
+                    {% include 'includes/messages.html' %}
+                    <form action="{% url 'create_car' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- Accès rapide aux photos -->
+                       
+                        
+                        <h4 class="section-title">Informations générales</h4>
+                        
+                        <div class="row">
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="car_title"><i class="fa fa-car mr-2"></i>Titre de la voiture</label>
+                                    <input type="text" name="car_title" id="car_title" class="input-text" placeholder="Ex: BMW Série 3" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="state"><i class="fa fa-map-marker mr-2"></i>État</label>
+                                    <select name="state" id="state" class="input-text" required>
+                                        <option value="">Sélectionnez l'état</option>
+                                        {% for state_code, state_name in car_states %}
+                                            <option value="{{ state_code }}">{{ state_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="city"><i class="fa fa-building mr-2"></i>Ville</label>
+                                    <input type="text" name="city" id="city" class="input-text" placeholder="Ex: Paris" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="color"><i class="fa fa-paint-brush mr-2"></i>Couleur</label>
+                                    <input type="text" name="color" id="color" class="input-text" placeholder="Ex: Noir" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="model"><i class="fa fa-cog mr-2"></i>Modèle</label>
+                                    <input type="text" name="model" id="model" class="input-text" placeholder="Ex: 320d" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="year"><i class="fa fa-calendar mr-2"></i>Année</label>
+                                    <input type="number" name="year" id="year" class="input-text" placeholder="Ex: 2022" min="1900" max="2025" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="condition"><i class="fa fa-check-circle mr-2"></i>État</label>
+                                    <select name="condition" id="condition" class="input-text" required>
+                                        <option value="">Sélectionnez l'état</option>
+                                        <option value="Excellent">Excellent</option>
+                                        <option value="Très bon">Très bon</option>
+                                        <option value="Bon">Bon</option>
+                                        <option value="Moyen">Moyen</option>
+                                        <option value="À réparer">À réparer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="price"><i class="fa fa-euro mr-2"></i>Prix</label>
+                                    <input type="number" name="price" id="price" class="input-text" placeholder="Ex: 25000" min="0" required>
+                                </div>
+                            </div>
+                            
+
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="doors"><i class="fa fa-car mr-2"></i>Nombre de portes</label>
+                                    <select name="doors" id="doors" class="input-text">
+                                        <option value="">Sélectionnez le nombre de portes</option>
+                                        <option value="2">2 portes</option>
+                                        <option value="3">3 portes</option>
+                                        <option value="4">4 portes</option>
+                                        <option value="5">5 portes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="passengers"><i class="fa fa-users mr-2"></i>Nombre de passagers</label>
+                                    <input type="number" name="passengers" id="passengers" class="input-text" placeholder="Ex: 5" min="1" max="9">
+                                </div>
+                            </div>
+                            
+
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="fuel_type"><i class="fa fa-tint mr-2"></i>Type de carburant</label>
+                                    <select name="fuel_type" id="fuel_type" class="input-text">
+                                        <option value="">Sélectionnez le type de carburant</option>
+                                        <option value="Essence">Essence</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="Hybride">Hybride</option>
+                                        <option value="Électrique">Électrique</option>
+                                        <option value="GPL">GPL</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="transmission"><i class="fa fa-cog mr-2"></i>Transmission</label>
+                                    <select name="transmission" id="transmission" class="input-text" required>
+                                        <option value="">Sélectionnez le type de transmission</option>
+                                        <option value="Automatique">Automatique</option>
+                                        <option value="Manuelle">Manuelle</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+
+                            
+
+                            
+                            <div class="col-md-6">
+                                <div class="form-group form-box">
+                                    <label for="is_featured"><i class="fa fa-star mr-2"></i>Disponible pour la location</label>
+                                    <select name="is_featured" id="is_featured" class="input-text">
+                                        <option value="Oui">Oui</option>
+                                        <option value="Non">Non</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+
+                        <div class="form-group form-box">
+                            <label for="description"><i class="fa fa-file-text mr-2"></i>Description</label>
+                            <textarea name="description" id="description" class="input-text" placeholder="Décrivez votre véhicule en détail..." rows="5" required></textarea>
+                        </div>
+                        <h4 class="section-title" id="photos"><i class="fa fa-images mr-2"></i></h4>
+                        <div class="form-section-card mb-4">
+                            <div class="form-section-header">
+                                <h5 class="mb-0 d-flex align-items-center">
+                                    
+                                 </h5>
+                            </div>
+                            <div class="form-section-body">
+                                
+                                
+                                <div class="form-group">
+                                    <label for="car_photo">
+                                        <i class="fa fa-image text-success mr-2"></i>
+                                        <strong>Photo principale</strong> 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="file" name="car_photo" class="form-control-file" id="car_photo" accept="image/*" required>
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3"><i class="fa fa-plus-circle mr-2"></i>Photos additionnelles</h6>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="car_photo_1">Photo additionnelle 1</label>
+                                            <input type="file" name="car_photo_1" class="form-control-file" id="car_photo_1" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="car_photo_2">Photo additionnelle 2</label>
+                                            <input type="file" name="car_photo_2" class="form-control-file" id="car_photo_2" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="car_photo_3">Photo additionnelle 3</label>
+                                            <input type="file" name="car_photo_3" class="form-control-file" id="car_photo_3" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="car_photo_4">Photo additionnelle 4</label>
+                                            <input type="file" name="car_photo_4" class="form-control-file" id="car_photo_4" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mt-5">
+                            <button type="submit" class="btn btn-success btn-lg px-5 btn-car-form">
+                                <i class="fa fa-plus-circle mr-2"></i>Ajouter la voiture
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">
+                            <i class="fa fa-arrow-left mr-2"></i>Retour au tableau de bord
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact section end -->
+
+{% endblock %}

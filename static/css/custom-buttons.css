@@ -1,0 +1,130 @@
+/* Bouton "Voir la voiture" (gris foncé) - STYLES RENFORCÉS */ 
+a.btn-outline-dark, 
+.btn-outline-dark, 
+table .btn-outline-dark { 
+    color: #fff !important; 
+    background-color: #343a40 !important; 
+    border-color: #343a40 !important; 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    display: inline-block !important; 
+    pointer-events: auto !important;
+    position: static !important;
+    z-index: 999 !important;
+} 
+
+/* Bouton "Voir la facture" (vert) - STYLES RENFORCÉS */ 
+a.btn-outline-success, 
+.btn-outline-success, 
+table .btn-outline-success { 
+    color: #fff !important; 
+    background-color: #28a745 !important; 
+    border-color: #28a745 !important; 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    display: inline-block !important; 
+    pointer-events: auto !important;
+    position: static !important;
+    z-index: 999 !important;
+} 
+
+/* Styles spécifiques pour les boutons dans le tableau du dashboard */
+table .btn-outline-dark,
+table .btn-outline-success {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+}
+
+/* Effet hover léger mais garder visible */ 
+a.btn-outline-dark:hover, 
+a.btn-outline-dark:focus,
+a.btn-outline-dark:active { 
+    color: #fff !important; 
+    background-color: #23272b !important; 
+    border-color: #1d2124 !important; 
+    box-shadow: none !important; 
+}
+
+a.btn-outline-success:hover,
+a.btn-outline-success:focus,
+a.btn-outline-success:active { 
+    color: #fff !important; 
+    background-color: #218838 !important; 
+    border-color: #1e7e34 !important; 
+    box-shadow: none !important; 
+}
+
+/* Désactiver l'effet de survol pour tous les boutons outline */
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-info:hover,
+.btn-outline-warning:hover,
+.btn-outline-danger:hover {
+    background-color: transparent !important;
+    color: inherit !important;
+    border-color: inherit !important;
+}
+
+/* Réinitialisation des styles Bootstrap qui pourraient interférer */
+.btn.btn-outline-dark,
+.btn.btn-outline-success {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+    pointer-events: auto !important;
+    position: static !important;
+    z-index: 999 !important;
+}
+
+/* Forcer les styles pour les boutons dans tous les contextes */
+.dashboard .btn-outline-dark,
+.dashboard .btn-outline-success,
+.table .btn-outline-dark,
+.table .btn-outline-success,
+.tab-content .btn-outline-dark,
+.tab-content .btn-outline-success {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+    pointer-events: auto !important;
+}
+
+/* Spécificité maximale - garder les couleurs de fond et forcer la visibilité */ 
+html body .btn-outline-dark:hover, 
+html body .btn-outline-dark:focus, 
+html body .btn-outline-dark:active,
+html body a.btn-outline-dark:hover, 
+html body a.btn-outline-dark:focus, 
+html body a.btn-outline-dark:active,
+html body table .btn-outline-dark:hover, 
+html body table .btn-outline-dark:focus, 
+html body table .btn-outline-dark:active { 
+    background-color: #23272b !important; 
+    color: #fff !important; 
+    border-color: #1d2124 !important; 
+    box-shadow: none !important; 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    display: inline-block !important; 
+} 
+
+html body .btn-outline-success:hover, 
+html body .btn-outline-success:focus, 
+html body .btn-outline-success:active,
+html body a.btn-outline-success:hover, 
+html body a.btn-outline-success:focus, 
+html body a.btn-outline-success:active,
+html body table .btn-outline-success:hover, 
+html body table .btn-outline-success:focus, 
+html body table .btn-outline-success:active { 
+    background-color: #218838 !important; 
+    color: #fff !important; 
+    border-color: #1e7e34 !important; 
+    box-shadow: none !important; 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    display: inline-block !important; 
+}

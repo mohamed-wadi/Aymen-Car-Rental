@@ -1,0 +1,256 @@
+/* Améliorations pour l'affichage des détails de voiture */
+
+/* Sidebar - Section Refine Your Search */
+.sidebar-right .widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-right .widget ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    border-left: 4px solid #f0151f;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-right .widget ul li:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.sidebar-right .widget ul li span:first-child {
+    font-weight: 600;
+    color: #333;
+    min-width: 100px;
+    text-align: left;
+}
+
+.sidebar-right .widget ul li span:last-child,
+.sidebar-right .widget ul li:not(:has(span:last-child)) {
+    color: #666;
+    font-weight: 500;
+    text-align: right;
+    flex: 1;
+}
+
+/* Correction pour les éléments sans span séparé */
+.sidebar-right .widget ul li:not(:has(span:last-child)) {
+    color: #333;
+}
+
+.sidebar-right .widget ul li:not(:has(span:last-child))::after {
+    content: attr(data-value);
+    color: #666;
+    font-weight: 500;
+    margin-left: auto;
+}
+
+/* Titre de la sidebar */
+.sidebar-title {
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0151f;
+    position: relative;
+}
+
+.sidebar-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #dc141d;
+}
+
+/* Groupement des informations par catégorie */
+.car-info-group {
+    margin-bottom: 25px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    border-left: 4px solid #f0151f;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.car-info-group:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.car-info-group-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f0151f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding: 5px 0;
+    border-bottom: 2px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.car-info-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.car-info-group li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.2s ease;
+    min-height: 40px;
+}
+
+.car-info-group li:last-child {
+    border-bottom: none;
+}
+
+.car-info-group li:hover {
+    background-color: rgba(240,21,31,0.05);
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.car-info-group li span:first-child {
+    font-weight: 600;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    min-width: 140px;
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.car-info-group li span:first-child i {
+    margin-right: 8px;
+    color: #f0151f;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+.car-info-group li span:last-child {
+    color: #212529;
+    font-weight: 500;
+    text-align: right;
+    flex-grow: 1;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+/* Icônes pour les différents types d'informations */
+.info-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    color: #f0151f;
+    font-size: 16px;
+}
+
+/* Animation pour l'apparition des groupes */
+.car-info-group {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Correction pour éviter le chevauchement de texte */
+.car-info-group * {
+    box-sizing: border-box;
+}
+
+.car-info-group li {
+    clear: both;
+    overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar-right .widget ul li {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .sidebar-right .widget ul li span:first-child {
+        margin-bottom: 5px;
+        min-width: auto;
+    }
+    
+    .sidebar-right .widget ul li span:last-child {
+        text-align: left;
+    }
+}
+
+/* Animation d'entrée */
+.sidebar-right .widget ul li {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Override: Send message button should keep black text and no hover color change */
+.sidebar-right .widget .btn.bomd {
+    background: transparent !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: none !important;
+    transition: none !important;
+}
+
+.sidebar-right .widget .btn.bomd:hover,
+.sidebar-right .widget .btn.bomd:focus,
+.sidebar-right .widget .btn.bomd:active {
+    background: transparent !important;
+    color: #000 !important;
+    border-color: #000 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+.btn.bomd:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(240, 21, 31, 0.4);
+    background: linear-gradient(135deg, #dc141d 0%, #c01219 100%);
+}

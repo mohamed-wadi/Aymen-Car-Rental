@@ -1,0 +1,75 @@
+/* Styles de correction pour les boutons transparents */
+/* Ce fichier doit être chargé après tous les autres CSS */
+
+/* Boutons gris foncé */
+.btn-outline-dark,
+a.btn-outline-dark,
+table .btn-outline-dark,
+.table .btn-outline-dark,
+.dashboard .btn-outline-dark,
+.tab-content .btn-outline-dark {
+    color: #fff !important;
+    background-color: #343a40 !important;
+    border-color: #343a40 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+    pointer-events: auto !important;
+    position: static !important;
+    z-index: 999 !important;
+}
+
+/* Boutons verts */
+.btn-outline-success,
+a.btn-outline-success,
+table .btn-outline-success,
+.table .btn-outline-success,
+.dashboard .btn-outline-success,
+.tab-content .btn-outline-success {
+    color: #fff !important;
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+    pointer-events: auto !important;
+    position: static !important;
+    z-index: 999 !important;
+}
+
+/* Effets au survol */
+.btn-outline-dark:hover,
+.btn-outline-dark:focus,
+.btn-outline-dark:active,
+a.btn-outline-dark:hover,
+a.btn-outline-dark:focus,
+a.btn-outline-dark:active,
+table .btn-outline-dark:hover,
+table .btn-outline-dark:focus,
+table .btn-outline-dark:active {
+    background-color: #23272b !important;
+    color: #fff !important;
+    border-color: #1d2124 !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus,
+.btn-outline-success:active,
+a.btn-outline-success:hover,
+a.btn-outline-success:focus,
+a.btn-outline-success:active,
+table .btn-outline-success:hover,
+table .btn-outline-success:focus,
+table .btn-outline-success:active {
+    background-color: #218838 !important;
+    color: #fff !important;
+    border-color: #1e7e34 !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+}
