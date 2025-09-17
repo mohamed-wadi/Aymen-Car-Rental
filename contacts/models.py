@@ -38,7 +38,7 @@ class Contact(models.Model):
                 delta = self.rental_end_date - self.rental_start_date
                 self.rental_days = delta.days + 1  # +1 pour inclure le jour de début
                 
-                # Calculer le coût total en utilisant le prix de vente comme prix journalier
+                # Calculer le coût total en utilisant le prix de location comme prix journalier
                 if car.price:
                     self.total_rental_cost = self.rental_days * car.price
                 else:

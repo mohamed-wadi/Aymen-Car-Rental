@@ -1,0 +1,35 @@
+# Plan de la Présentation - Projet Carzone
+
+## 1. Introduction et Contexte
+
+Carzone est une plateforme web de location de voitures développée avec Django, répondant à la demande croissante de solutions de mobilité partagée. Son objectif est de faciliter la mise en relation entre propriétaires et locataires de véhicules dans un environnement sécurisé, s'adaptant aux nouvelles habitudes de consommation.
+
+## 2. Architecture et Technologies
+
+L'architecture de Carzone s'appuie sur le pattern MVT de Django avec une organisation modulaire et des modèles de données structurés autour d'entités principales comme Car, User et Contact. Le backend utilise Django 3.0.7 avec PostgreSQL/SQLite tandis que l'interface responsive est développée avec HTML/CSS/Bootstrap, le tout déployé sur Heroku avec Gunicorn.
+
+## 3. Fonctionnalités Principales
+
+Carzone offre un système d'authentification complet avec profils personnalisés et un moteur de recherche avancé permettant de filtrer les véhicules selon divers critères. La plateforme intègre un tableau de bord utilisateur pour gérer les annonces et locations, ainsi qu'un système de facturation automatisé générant des factures PDF.
+
+### Système de Réservation Intelligent
+
+Un calendrier interactif permettant la visualisation en temps réel des disponibilités et la réservation instantanée des véhicules sans conflit de planning.
+
+### Système de Facturation Automatisé
+
+Un système de génération automatique de factures PDF incluant le détail des services et options, facilitant le suivi administratif des locations et la gestion comptable.
+
+## 4. Démonstration et Parcours Utilisateur
+
+L'expérience utilisateur sur Carzone commence par une page d'accueil intuitive et un parcours de location optimisé permettant de sélectionner un véhicule en trois clics. Le processus complet se déroule en quatre étapes bien définies, de la recherche à la génération automatique du contrat, tandis que les administrateurs disposent d'un tableau de bord complet avec outils de modération et d'analyse.
+
+## 5. Défis, Solutions et Perspectives
+
+Le développement de Carzone a nécessité de relever plusieurs défis techniques majeurs, notamment l'optimisation du stockage et de l'affichage des images de véhicules, la gestion complexe des disponibilités en temps réel et la protection des données personnelles et des transactions. Ces obstacles ont exigé des solutions innovantes et robustes pour garantir une expérience utilisateur de qualité.
+
+Pour résoudre ces problématiques, l'équipe a implémenté plusieurs solutions techniques efficaces. La bibliothèque Pillow a été utilisée pour le traitement automatique des images avec redimensionnement et compression, optimisant ainsi les performances du site. Un algorithme de calendrier sophistiqué a été développé pour la gestion précise des périodes de location, évitant les conflits de réservation. Parallèlement, des protocoles de sécurité rigoureux ont été mis en place pour protéger les données sensibles des utilisateurs.
+
+Le projet Carzone ne s'arrête pas à sa version actuelle et prévoit plusieurs évolutions futures pour enrichir l'expérience utilisateur. Parmi les fonctionnalités envisagées figurent l'intégration d'une passerelle de paiement sécurisée, un système d'évaluation et de commentaires pour les véhicules et utilisateurs, le développement d'une application mobile native pour iOS et Android, ainsi que l'implémentation d'un système de géolocalisation pour localiser facilement les véhicules à proximité.
+
+En conclusion, le bilan du projet est très positif avec une plateforme fonctionnelle qui répond parfaitement aux besoins identifiés initialement. Le développement de Carzone a permis l'acquisition de compétences précieuses en développement web full-stack avec Django et la mise en pratique des principes de conception centrée utilisateur. Les perspectives d'évolution et d'amélioration continue du service sont nombreuses, témoignant du potentiel et de la viabilité à long terme de cette solution de location de véhicules.

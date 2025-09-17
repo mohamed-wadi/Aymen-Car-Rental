@@ -1,0 +1,31 @@
+
+sequenceDiagram
+    actor Visiteur
+    actor Utilisateur
+    participant Système
+    participant BaseDeDonnées
+    
+    Visiteur->>Système: Consulter les annonces
+    Système->>BaseDeDonnées: Requête des annonces
+    BaseDeDonnées->>Système: Résultats des annonces
+    Système->>Visiteur: Affichage des annonces
+    
+    Visiteur->>Système: Rechercher des voitures
+    Système->>BaseDeDonnées: Requête avec filtres
+    BaseDeDonnées->>Système: Résultats filtrés
+    Système->>Visiteur: Affichage des résultats
+    
+    Visiteur->>Système: S'authentifier
+    Système->>BaseDeDonnées: Vérification identifiants
+    BaseDeDonnées->>Système: Confirmation identité
+    Système->>Utilisateur: Session authentifiée
+    
+    Utilisateur->>Système: Consulter une voiture
+    Système->>BaseDeDonnées: Requête détails voiture
+    BaseDeDonnées->>Système: Détails de la voiture
+    Système->>Utilisateur: Affichage détaillé
+    
+    Utilisateur->>Système: Gérer les annonces
+    Système->>BaseDeDonnées: Mise à jour annonces
+    BaseDeDonnées->>Système: Confirmation
+    Système->>Utilisateur: Confirmation succès

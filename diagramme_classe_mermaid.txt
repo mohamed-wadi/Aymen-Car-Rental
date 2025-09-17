@@ -1,0 +1,40 @@
+```mermaid
+classDiagram
+    note "Diagramme de classes simplifié du projet Carzone"
+    
+    User <|-- Car : possède
+    
+    class User{
+        +String username
+        +String email
+        +String first_name
+        +String last_name
+        +Boolean is_staff
+        +save()
+        +__str__()
+    }
+    
+    note for Car "Représente une annonce de voiture"
+    class Car{
+        +String car_title
+        +String model
+        +Integer year
+        +String condition
+        +Integer price
+        +Image car_photo
+        +String body_style
+        +String engine
+        +String transmission
+        +Boolean is_available_for_rent
+        +save()
+        +__str__()
+    }
+    
+    class Team{
+        +String name
+        +Image photo
+        +String designation
+        +save()
+        +__str__()
+    }
+```

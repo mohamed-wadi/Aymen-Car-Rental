@@ -1,0 +1,29 @@
+
+graph TD
+    %% Acteurs
+    Visiteur[Visiteur]
+    Utilisateur[Utilisateur]
+    Admin[Administrateur]
+    
+    %% Cas d'utilisation
+    UC1(Consulter les annonces)
+    UC2(Rechercher des voitures)
+    UC3(S'authentifier)
+    UC4(Gérer son profil)
+    UC5(Gérer les annonces)
+    UC6(Gérer les utilisateurs)
+    
+    %% Relations entre acteurs
+    Utilisateur --> Visiteur
+    Admin --> Utilisateur
+    
+    %% Relations acteurs - cas d'utilisation
+    Visiteur --> UC1
+    Visiteur --> UC2
+    
+    Utilisateur --> UC3
+    Utilisateur --> UC4
+    
+    Admin --> UC5
+    Admin --> UC6
+```

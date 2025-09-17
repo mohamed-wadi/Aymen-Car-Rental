@@ -1,0 +1,557 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french,english]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{calc}
+\usetikzlibrary{calc}
+\usepackage{afterpage}
+
+\geometry{margin=2.5cm}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Projet Carzone}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+    % Couleurs personnalisées
+    \definecolor{emsiblue}{RGB}{0, 83, 155}
+    \definecolor{emsigold}{RGB}{255, 215, 0}
+    \definecolor{emsigreen}{RGB}{0, 146, 42}
+    
+    % Bordure décorative
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[emsiblue, line width=2pt] 
+            ($(current page.north west) + (1cm,-1cm)$) rectangle
+            ($(current page.south east) + (-1cm,1cm)$);
+        \draw[emsigold, line width=1pt] 
+            ($(current page.north west) + (1.2cm,-1.2cm)$) rectangle
+            ($(current page.south east) + (-1.2cm,1.2cm)$);
+    \end{tikzpicture}
+    
+    \centering
+    \vspace*{1cm}
+
+% Logo EMSI
+    \begin{center}
+        \includegraphics[width=8cm]{LOGO.png}
+        % Remplacez "chemin/vers/logo-emsi.png" par le chemin réel de votre image
+        % Par exemple: "static/img/logos/emsi-logo.png"
+    \end{center}
+    
+    \vspace{2cm}
+
+    
+    % Titre principal
+    {\color{emsigreen}\fontsize{24}{28}\selectfont\bfseries RAPPORT DE STAGE\par}
+    \vspace{0.5cm}
+    {\Large\itshape Filière : Ingénierie en Informatique et Réseaux (IIR)\par}
+    
+    \vspace{1cm}
+    
+    % Thème du projet
+    {\Large\bfseries Thème : {\color{emsigreen}Plateforme Web de Location de Voitures}\par}
+    
+    \vspace{1cm}
+    
+    % Réalisé par
+    \begin{center}
+        \Large\textbf{Réalisé par :}
+        \vspace{1cm}
+        
+        \large Aymane CHAGUIRI
+    \end{center}
+    
+    \vspace{1.5cm}
+    
+    % Encadré par
+    \begin{center}
+        \Large\textbf{Encadré par :}
+        \vspace{1cm}
+        
+        \large Mme Khadija BOUSMAR
+    \end{center}
+    
+    \vspace{1.5cm}
+    
+    % Jury
+    \begin{center}
+        \Large\textbf{Jury :}
+        \vspace{1cm}
+        \large Mr Achraf ZAHID
+
+        \large Mme Fadwa BOUHLAL
+    \end{center}
+    
+    \vspace{1cm}
+    
+    % Année académique
+    \vfill
+    {\Large Année Académique 2025 - 2026\par}
+\end{titlepage}
+
+% Dédicace
+\cleardoublepage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{flushright}
+\textit{\large Je dédie ce modeste travail à mes chers parents,\\pour leur soutien inconditionnel et leurs sacrifices,\\à mes frères et sœurs pour leurs encouragements,\\et à tous ceux qui m'ont soutenu durant mon parcours académique.}
+\end{flushright}
+\vspace*{\fill}
+\newpage
+
+% Remerciements
+\cleardoublepage
+\thispagestyle{fancy}
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+
+Je tiens à exprimer ma profonde gratitude à l'École Marocaine des Sciences de l'Ingénieur (EMSI) pour m'avoir offert l'opportunité d'effectuer ce stage enrichissant.
+
+Mes sincères remerciements vont à Madame Khadija BOUSMAR, mon encadrante de stage, pour sa disponibilité, ses précieux conseils et son suivi rigoureux tout au long de cette période d'apprentissage.
+
+Je remercie également l'ensemble du corps professoral de l'EMSI pour la qualité de la formation dispensée et les connaissances transmises qui m'ont permis de mener à bien ce projet.
+
+Ma reconnaissance s'adresse aussi à tous les membres de l'équipe qui m'ont accueilli et intégré, contribuant ainsi à rendre cette expérience professionnelle aussi agréable qu'instructive.
+
+Enfin, je remercie ma famille et mes amis pour leur soutien moral et leurs encouragements constants.
+
+\newpage
+
+% Abstract / Résumé
+\cleardoublepage
+\thispagestyle{fancy}
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+\begin{otherlanguage}{english}
+This report presents a detailed analysis of the Carzone project, a web platform for car rentals developed with the Django framework. The project allows users to browse car listings, filter results according to different criteria, contact owners, and manage rental requests.
+
+The Carzone project is structured according to the MVC (Model-View-Controller) architecture adapted to Django in the form of MVT (Model-View-Template). This architecture allows a clear separation of responsibilities between the different layers of the application, thus facilitating the maintenance and evolution of the code.
+
+The main objectives of this internship were to develop a complete web application with modern technologies, implement advanced features such as user authentication, car listing management, and contact request handling, while following best development practices.
+\end{otherlanguage}
+
+\vspace{1cm}
+
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+
+Ce rapport présente une analyse détaillée du projet Carzone, une plateforme web de location de voitures développée avec le framework Django. Le projet permet aux utilisateurs de parcourir des annonces de voitures, de filtrer les résultats selon différents critères, de contacter les propriétaires et de gérer des demandes de location.
+
+Le projet Carzone est structuré selon l'architecture MVC (Modèle-Vue-Contrôleur) adaptée à Django sous la forme MVT (Modèle-Vue-Template). Cette architecture permet une séparation claire des responsabilités entre les différentes couches de l'application, facilitant ainsi la maintenance et l'évolution du code.
+
+Les principaux objectifs de ce stage étaient de développer une application web complète avec des technologies modernes, d'implémenter des fonctionnalités avancées telles que l'authentification des utilisateurs, la gestion des annonces de voitures et le traitement des demandes de contact, tout en suivant les meilleures pratiques de développement.
+
+\renewcommand{\contentsname}{Sommaire}
+\tableofcontents
+\newpage
+
+\renewcommand{\listfigurename}{Liste des Figures}
+\listoffigures
+\newpage
+
+\chapter{Introduction}
+
+Ce rapport présente une analyse détaillée du projet Carzone, une plateforme web de location de voitures développée avec le framework Django. Le projet permet aux utilisateurs de parcourir des annonces de voitures, de filtrer les résultats selon différents critères, de contacter les propriétaires et de gérer des demandes de location.
+
+Le projet Carzone est structuré selon l'architecture MVC (Modèle-Vue-Contrôleur) adaptée à Django sous la forme MVT (Modèle-Vue-Template). Cette architecture permet une séparation claire des responsabilités entre les différentes couches de l'application, facilitant ainsi la maintenance et l'évolution du code.
+
+\section{Objectifs du Projet}
+
+Les principaux objectifs du projet Carzone sont :
+
+\begin{itemize}
+    \item Permettre aux utilisateurs de consulter des annonces de voitures
+    \item Offrir des fonctionnalités de recherche et de filtrage avancées
+    \item Gérer les demandes de contact et de location
+    \item Fournir un tableau de bord administrateur pour la gestion des annonces et des utilisateurs
+    \item Intégrer l'authentification via les réseaux sociaux (Google, Facebook)
+    \item Générer des factures pour les locations de voitures
+\end{itemize}
+
+\chapter{Architecture du Projet}
+
+\section{Structure des Répertoires}
+
+Le projet Carzone est organisé selon la structure standard d'un projet Django, avec plusieurs applications qui gèrent différentes fonctionnalités :
+
+\begin{lstlisting}[language=bash]
+carzone-gitproject-master/
+|-- accounts/         # Gestion des utilisateurs et authentification
+|-- cars/             # Gestion des annonces de voitures
+|-- carzone/          # Configuration principale du projet
+|-- contacts/         # Gestion des demandes de contact et location
+|-- pages/            # Pages statiques et accueil
+|-- media/            # Fichiers média uploadés
+|-- static/           # Fichiers statiques (CSS, JS, images)
+|-- templates/        # Templates HTML
+|-- manage.py         # Script de gestion Django
+|-- requirements.txt  # Dépendances du projet
+\end{lstlisting}
+
+\section{Applications Django}
+
+Le projet est divisé en plusieurs applications Django, chacune ayant une responsabilité spécifique :
+
+\begin{itemize}
+    \item \textbf{accounts} : Gestion des utilisateurs, authentification, tableau de bord
+    \item \textbf{cars} : Gestion des annonces de voitures, recherche et filtrage
+    \item \textbf{contacts} : Gestion des demandes de contact et de location
+    \item \textbf{pages} : Pages statiques, page d'accueil, à propos, services
+\end{itemize}
+
+\newpage
+\section{Base de Données}
+
+Le projet utilise SQLite en développement et PostgreSQL en production (via Heroku). La configuration de la base de données est définie dans le fichier settings.py :
+
+\begin{lstlisting}[language=Python]
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+\end{lstlisting}
+
+
+\chapter{Modèles de Données}
+
+\section{Diagramme de Classe}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Class Diagram.png}
+    \caption{Diagramme de classe du projet Carzone}
+    \label{fig:diagramme_classe}
+\end{figure}
+
+Le diagramme de classe ci-dessus représente les principales entités du système Carzone et leurs relations. Les classes principales sont User, Car et Team.
+\newpage
+
+\section{Modèle Car}
+
+Le modèle Car est le cœur du projet, il représente une annonce de voiture avec toutes ses caractéristiques :
+
+\begin{lstlisting}[language=Python]
+class Car(models.Model):
+    car_title = models.CharField(max_length=255)
+    state = models.CharField(choices=state_choice, max_length=100)
+    city = models.CharField(max_length=100)
+    color = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    year = models.IntegerField(('year'), choices=year_choice)
+    condition = models.CharField(max_length=100)
+    price = models.IntegerField()
+    description = RichTextField()
+    car_photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
+    car_photo_1 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
+    car_photo_2 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
+    car_photo_3 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
+    car_photo_4 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
+    features = MultiSelectField(choices=features_choices)
+    body_style = models.CharField(max_length=100)
+    engine = models.CharField(max_length=100)
+    transmission = models.CharField(max_length=100)
+    interior = models.CharField(max_length=100)
+    miles = models.IntegerField()
+    doors = models.CharField(choices=door_choices, max_length=10)
+    passengers = models.IntegerField()
+    vin_no = models.CharField(max_length=100)
+    milage = models.IntegerField()
+    fuel_type = models.CharField(max_length=50)
+    no_of_owners = models.CharField(max_length=100)
+    is_featured = models.BooleanField(default=False)
+    daily_rental_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, help_text="Prix de location par jour")
+    is_available_for_rent = models.BooleanField(default=True, help_text="Disponible pour la location")
+    created_date = models.DateTimeField(default=datetime.now, blank=True)
+\end{lstlisting}
+
+Ce modèle Car est au cœur du système de gestion des annonces de voitures et comprend plusieurs catégories de champs :
+
+\subsection*{Informations de Base}
+
+Les champs fondamentaux qui identifient et décrivent chaque véhicule :
+\begin{itemize}
+    \item \texttt{car_title} : Le titre de l'annonce, généralement la marque et le modèle du véhicule
+    \item \texttt{state} : L'état ou la région où se trouve le véhicule
+    \item \texttt{city} : La ville où se trouve le véhicule
+    \item \texttt{color} : La couleur du véhicule
+    \item \texttt{model} : Le modèle spécifique du véhicule
+    \item \texttt{year} : L'année de fabrication
+    \item \texttt{condition} : L'état général du véhicule (neuf, occasion, etc.)
+    \item \texttt{price} : Le prix de location du véhicule
+    \item \texttt{description} : Description détaillée du véhicule
+\end{itemize}
+
+\subsection*{Caractéristiques Techniques}
+
+Les spécifications techniques qui détaillent les aspects mécaniques et physiques :
+\begin{itemize}
+    \item \texttt{car_photo} et autres champs photo : Images du véhicule sous différents angles
+    \item \texttt{features} : Équipements et options du véhicule
+    \item \texttt{body_style} : Type de carrosserie (berline, SUV, coupé, etc.)
+    \item \texttt{engine} : Caractéristiques du moteur
+    \item \texttt{transmission} : Type de transmission (manuelle, automatique, etc.)
+    \item \texttt{interior} : Description de l'intérieur du véhicule
+    \item \texttt{miles} : Kilométrage du véhicule
+    \item \texttt{doors} : Nombre de portes
+    \item \texttt{passengers} : Capacité de passagers
+    \item \texttt{vin_no} : Numéro d'identification du véhicule
+    \item \texttt{milage} : Consommation de carburant
+    \item \texttt{fuel_type} : Type de carburant utilisé
+    \item \texttt{no_of_owners} : Nombre de propriétaires précédents
+\end{itemize}
+
+\subsection*{Fonctionnalités de Location}
+
+Les champs spécifiques à la gestion de la location de véhicules :
+\begin{itemize}
+    \item \texttt{daily_rental_price} : Prix de location journalier
+    \item \texttt{is_available_for_rent} : Indicateur de disponibilité pour la location
+    \item \texttt{is_featured} : Indicateur pour mettre en avant certaines annonces
+    \item \texttt{created_date} : Date de création de l'annonce
+\end{itemize}
+
+Ce modèle complet permet une gestion efficace des annonces de voitures, offrant aux utilisateurs toutes les informations nécessaires pour prendre une décision d'achat ou de location éclairée. La structure modulaire facilite également l'extension future avec de nouveaux attributs si nécessaire.
+5
+
+\chapter{Fonctionnalités Principales}
+
+\section{Diagramme de Séquence}
+
+\begin{figure}[H] 
+     \centering 
+     \includegraphics[height=15cm]{Class sequence part1.png}
+     \caption{Diagramme de séquence des interactions principales - Partie 1} 
+     \label{fig:diagramme_sequence_part1} 
+ \end{figure}
+
+ \begin{figure}[H] 
+     \centering 
+     \includegraphics[width=0.9\textwidth]{Class sequence part2.png} 
+     \caption{Diagramme de séquence des interactions principales - Partie 2} 
+     \label{fig:diagramme_sequence_part2} 
+ \end{figure}
+
+Le diagramme de séquence ci-dessus illustre les interactions entre les différents acteurs et composants du système Carzone.
+
+
+
+
+\section{Gestion des Annonces de Voitures}
+
+L'application \texttt{cars} gère les annonces de voitures avec les fonctionnalités suivantes :
+
+\begin{itemize}
+    \item Création, modification et suppression d'annonces
+    \item Affichage détaillé des caractéristiques d'une voiture
+    \item Galerie de photos pour chaque voiture
+    \item Recherche et filtrage par différents critères (marque, modèle, année, prix, etc.)
+    \item Mise en avant de certaines voitures sur la page d'accueil
+\end{itemize}
+
+
+
+
+
+\chapter{Technologies Utilisées}
+
+\section{Backend}
+
+\begin{itemize}
+    \item \textbf{Django 3.0.7} : Framework web Python utilisé pour le développement de l'application
+    \item \textbf{SQLite / PostgreSQL} : Systèmes de gestion de base de données
+    \item \textbf{django-allauth} : Gestion de l'authentification, y compris l'authentification via les réseaux sociaux
+    \item \textbf{django-ckeditor} : Éditeur de texte riche pour les descriptions de voitures
+    \item \textbf{django-multiselectfield} : Champs de sélection multiple pour les caractéristiques des voitures
+    \item \textbf{xhtml2pdf} : Génération de documents PDF à partir de templates HTML
+    \item \textbf{Pillow} : Traitement d'images pour les photos de voitures
+\end{itemize}
+
+\section{Frontend}
+
+\begin{itemize}
+    \item \textbf{HTML/CSS/JavaScript} : Technologies web standard pour l'interface utilisateur
+    \item \textbf{Bootstrap} : Framework CSS pour le design responsive
+    \item \textbf{jQuery} : Bibliothèque JavaScript pour les interactions côté client
+    \item \textbf{Font Awesome} : Bibliothèque d'icônes
+\end{itemize}
+
+
+
+\section{Déploiement}
+
+\begin{itemize}
+    \item \textbf{Heroku} : Plateforme cloud pour le déploiement de l'application
+    \item \textbf{Gunicorn} : Serveur WSGI HTTP pour Python
+    \item \textbf{Whitenoise} : Gestion des fichiers statiques en production
+    \item \textbf{dj-database-url} : Configuration de la base de données via URL
+\end{itemize}
+
+\chapter{Annexes}
+
+\section{Captures d'écran de l'application}
+
+\subsection{Page d'accueil}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Home.png}
+    \caption{Page d'accueil du site Carzone}
+    \label{fig:home_capture}
+\end{figure}
+
+Interface moderne avec carrousel de voitures en vedette, barre de recherche centrale et affichage des dernières annonces. Le design responsive s'adapte à tous les appareils pour une navigation optimale.
+
+\subsection{Authentification}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{login.png}
+    \caption{Page de connexion}
+    \label{fig:login_capture}
+\end{figure}
+
+Interface épurée avec formulaire de connexion simple et options de récupération de mot de passe. Intégration des méthodes d'authentification via réseaux sociaux pour une connexion rapide et simplifiée.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{register.png}
+    \caption{Page d'inscription}
+    \label{fig:register_capture}
+\end{figure}
+
+Formulaire d'inscription recueillant les informations essentielles avec validations en temps réel. Option d'inscription via réseaux sociaux disponible pour faciliter l'onboarding des nouveaux utilisateurs.
+
+\subsection{Tableau de bord utilisateur}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Dashboard.png}
+    \caption{Tableau de bord utilisateur}
+    \label{fig:dashboard_capture}
+\end{figure}
+
+Espace personnel centralisé présentant les statistiques de l'utilisateur (annonces, demandes, favoris) et permettant la gestion des informations personnelles et des transactions. Interface intuitive avec cartes d'information et design responsive pour une utilisation sur tous les appareils.
+
+\subsection{Gestion des utilisateurs}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{gestion user.png}
+    \caption{Interface de gestion des utilisateurs}
+    \label{fig:users_management_capture}
+\end{figure}
+
+Outil administratif affichant la liste des utilisateurs avec leurs informations principales et statuts. Fonctionnalités de recherche, filtrage et actions en masse pour une gestion efficace des comptes.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{edit user.png}
+    \caption{Édition d'un profil utilisateur}
+    \label{fig:edit_user_capture}
+\end{figure}
+
+Interface permettant la modification détaillée des informations d'un compte, incluant données personnelles, paramètres de sécurité et permissions. Fonctionnalités de réinitialisation de mot de passe et d'attribution de rôles avec validations en temps réel.
+
+\subsection{Gestion des annonces}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{gestion cars.png}
+    \caption{Interface de gestion des annonces}
+    \label{fig:cars_management_capture}
+\end{figure}
+
+Tableau de bord présentant les annonces avec leurs informations essentielles et statistiques. Fonctionnalités de filtrage, recherche et actions en lot pour une gestion efficace du catalogue de véhicules.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{add car.png}
+    \caption{Ajout d'une nouvelle annonce}
+    \label{fig:add_car_capture}
+\end{figure}
+
+Formulaire structuré pour saisir les caractéristiques du véhicule (informations générales, détails techniques, équipements) et télécharger des photos. Validations automatiques et suggestions intelligentes pour optimiser la qualité des annonces.
+
+\subsection{Gestion des demandes}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{gestion demande.png}
+    \caption{Interface de gestion des demandes}
+    \label{fig:requests_management_capture}
+\end{figure}
+
+Interface centralisant les requêtes clients avec statuts et détails complets. Fonctionnalités de filtrage, suivi des délais et attribution aux membres de l'équipe pour un traitement efficace des demandes.
+
+\subsection{Facturation}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{facture.png}
+    \caption{Exemple de facture générée}
+    \label{fig:invoice_capture}
+\end{figure}
+
+Système générant des factures professionnelles avec informations légales complètes et montants détaillés. Documents au format PDF avec design épuré et historique des transactions accessible aux administrateurs et clients.
+
+\chapter{Conclusion}
+
+Le projet Carzone est une application web complète pour la location de voitures, développée avec le framework Django. Il offre une large gamme de fonctionnalités, de la gestion des annonces à la génération de factures, en passant par l'authentification via les réseaux sociaux.
+
+L'architecture du projet suit les bonnes pratiques de développement Django, avec une séparation claire des responsabilités entre les différentes applications. Les modèles de données sont bien structurés et les relations entre eux sont clairement définies.
+
+Le projet utilise plusieurs technologies modernes pour offrir une expérience utilisateur optimale, tant du côté frontend que backend. Il est également configuré pour un déploiement facile sur la plateforme Heroku.
+
+\section{Perspectives d'Amélioration}
+
+Plusieurs améliorations pourraient être apportées au projet Carzone :
+
+\begin{itemize}
+    \item Ajout d'un système de paiement en ligne pour les locations
+    \item Implémentation d'un système de notation et d'avis pour les voitures
+    \item Ajout d'une fonctionnalité de comparaison de voitures
+    \item Intégration d'une carte interactive pour localiser les voitures
+    \item Développement d'une application mobile
+    \item Amélioration de la sécurité (HTTPS, protection contre les attaques CSRF, etc.)
+\end{itemize}
+
+\end{document}
